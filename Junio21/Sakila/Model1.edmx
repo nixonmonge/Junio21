@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="sakilaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="film">
+          <Key>
+            <PropertyRef Name="film_id" />
+          </Key>
+          <Property Name="film_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="description" Type="text" />
+          <Property Name="release_year" Type="varchar" MaxLength="4" />
+          <Property Name="language_id" Type="tinyint" Nullable="false" />
+          <Property Name="original_language_id" Type="tinyint" />
+          <Property Name="rental_duration" Type="tinyint" Nullable="false" />
+          <Property Name="rental_rate" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+          <Property Name="length" Type="smallint" />
+          <Property Name="replacement_cost" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="rating" Type="varchar" MaxLength="10" />
+          <Property Name="special_features" Type="varchar" MaxLength="255" />
+          <Property Name="last_update" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="language">
+          <Key>
+            <PropertyRef Name="language_id" />
+          </Key>
+          <Property Name="language_id" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="last_update" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_film_language">
+          <End Role="language" Type="Self.language" Multiplicity="1" />
+          <End Role="film" Type="Self.film" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="language">
+              <PropertyRef Name="language_id" />
+            </Principal>
+            <Dependent Role="film">
+              <PropertyRef Name="language_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_film_language_original">
+          <End Role="language" Type="Self.language" Multiplicity="0..1" />
+          <End Role="film" Type="Self.film" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="language">
+              <PropertyRef Name="language_id" />
+            </Principal>
+            <Dependent Role="film">
+              <PropertyRef Name="original_language_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="sakilaModelStoreContainer">
+          <EntitySet Name="film" EntityType="Self.film" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="language" EntityType="Self.language" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_film_language" Association="Self.fk_film_language">
+            <End Role="language" EntitySet="language" />
+            <End Role="film" EntitySet="film" />
+          </AssociationSet>
+          <AssociationSet Name="fk_film_language_original" Association="Self.fk_film_language_original">
+            <End Role="language" EntitySet="language" />
+            <End Role="film" EntitySet="film" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="sakilaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="film">
+          <Key>
+            <PropertyRef Name="film_id" />
+          </Key>
+          <Property Name="film_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="release_year" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="language_id" Type="Byte" Nullable="false" />
+          <Property Name="original_language_id" Type="Byte" />
+          <Property Name="rental_duration" Type="Byte" Nullable="false" />
+          <Property Name="rental_rate" Type="Decimal" Precision="4" Scale="2" Nullable="false" />
+          <Property Name="length" Type="Int16" />
+          <Property Name="replacement_cost" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="rating" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="special_features" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="last_update" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="language" Relationship="Self.fk_film_language" FromRole="film" ToRole="language" />
+          <NavigationProperty Name="language1" Relationship="Self.fk_film_language_original" FromRole="film" ToRole="language" />
+        </EntityType>
+        <EntityType Name="language">
+          <Key>
+            <PropertyRef Name="language_id" />
+          </Key>
+          <Property Name="language_id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="last_update" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="film" Relationship="Self.fk_film_language" FromRole="language" ToRole="film" />
+          <NavigationProperty Name="film1" Relationship="Self.fk_film_language_original" FromRole="language" ToRole="film" />
+        </EntityType>
+        <Association Name="fk_film_language">
+          <End Role="language" Type="Self.language" Multiplicity="1" />
+          <End Role="film" Type="Self.film" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="language">
+              <PropertyRef Name="language_id" />
+            </Principal>
+            <Dependent Role="film">
+              <PropertyRef Name="language_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_film_language_original">
+          <End Role="language" Type="Self.language" Multiplicity="0..1" />
+          <End Role="film" Type="Self.film" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="language">
+              <PropertyRef Name="language_id" />
+            </Principal>
+            <Dependent Role="film">
+              <PropertyRef Name="original_language_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="sakilaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="film" EntityType="Self.film" />
+          <EntitySet Name="language" EntityType="Self.language" />
+          <AssociationSet Name="fk_film_language" Association="Self.fk_film_language">
+            <End Role="language" EntitySet="language" />
+            <End Role="film" EntitySet="film" />
+          </AssociationSet>
+          <AssociationSet Name="fk_film_language_original" Association="Self.fk_film_language_original">
+            <End Role="language" EntitySet="language" />
+            <End Role="film" EntitySet="film" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="sakilaModelStoreContainer" CdmEntityContainer="sakilaEntities">
+          <EntitySetMapping Name="film">
+            <EntityTypeMapping TypeName="sakilaModel.film">
+              <MappingFragment StoreEntitySet="film">
+                <ScalarProperty Name="film_id" ColumnName="film_id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="release_year" ColumnName="release_year" />
+                <ScalarProperty Name="language_id" ColumnName="language_id" />
+                <ScalarProperty Name="original_language_id" ColumnName="original_language_id" />
+                <ScalarProperty Name="rental_duration" ColumnName="rental_duration" />
+                <ScalarProperty Name="rental_rate" ColumnName="rental_rate" />
+                <ScalarProperty Name="length" ColumnName="length" />
+                <ScalarProperty Name="replacement_cost" ColumnName="replacement_cost" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="special_features" ColumnName="special_features" />
+                <ScalarProperty Name="last_update" ColumnName="last_update" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="language">
+            <EntityTypeMapping TypeName="sakilaModel.language">
+              <MappingFragment StoreEntitySet="language">
+                <ScalarProperty Name="language_id" ColumnName="language_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="last_update" ColumnName="last_update" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
