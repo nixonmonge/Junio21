@@ -21,5 +21,21 @@ namespace Junio21
             TextBox2.ReadOnly = true; // Dejamos texto solo lectura
             
         }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            if (IsValid)
+            {
+                var controlNuevo = new Literal();
+                controlNuevo.Text = "El Objeto es valido";
+                Panel1.Controls.Add(controlNuevo);
+            }
+            else
+            {
+                var controlNuevo = new Literal();
+                controlNuevo.Text = "El Objeto no es valido";
+                Panel1.Controls.Add(controlNuevo);
+            }
+        }
     }
 }
