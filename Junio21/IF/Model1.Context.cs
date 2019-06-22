@@ -13,10 +13,10 @@ namespace Junio21.IF
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class junio21Entities : DbContext
+    public partial class junio21Entities1 : DbContext
     {
-        public junio21Entities()
-            : base("name=junio21Entities")
+        public junio21Entities1()
+            : base("name=junio21Entities1")
         {
         }
     
@@ -26,6 +26,7 @@ namespace Junio21.IF
         }
     
         public virtual DbSet<Ciudades> Ciudades { get; set; }
+        public virtual DbSet<Continentes> Continentes { get; set; }
         public virtual DbSet<Paises> Paises { get; set; }
     }
 }

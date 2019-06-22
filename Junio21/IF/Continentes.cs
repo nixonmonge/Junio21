@@ -12,20 +12,18 @@ namespace Junio21.IF
     using System;
     using System.Collections.Generic;
     
-    public partial class Paises
+    public partial class Continentes
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Paises()
+        public Continentes()
         {
-            this.Ciudades = new HashSet<Ciudades>();
+            this.Paises = new HashSet<Paises>();
         }
     
-        public int PaisId { get; set; }
+        public int ContinenteId { get; set; }
         public string Nombre { get; set; }
-        public Nullable<int> ContinenteId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ciudades> Ciudades { get; set; }
-        public virtual Continentes Continentes { get; set; }
+        public virtual ICollection<Paises> Paises { get; set; }
     }
 }
